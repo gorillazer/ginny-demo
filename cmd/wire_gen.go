@@ -18,6 +18,7 @@ import (
 	"github.com/gorillazer/ginny-jaeger"
 	"github.com/gorillazer/ginny-log"
 	"github.com/gorillazer/ginny-mysql"
+	"github.com/gorillazer/ginny-redis"
 	"github.com/gorillazer/ginny-serve/grpc"
 	"github.com/gorillazer/ginny-serve/http"
 )
@@ -54,12 +55,17 @@ func CreateApp(name string) (*ginny.Application, error) {
 	if err != nil {
 		return nil, err
 	}
+	redisConfig, err := redis.NewConfig(viper)
+	if err != nil {
+		return nil, err
+	}
+	manager := redis.New(redisConfig, logger)
 	mysqlConfig, err := mysql.NewConfig(viper)
 	if err != nil {
 		return nil, err
 	}
 	sqlBuilder := mysql.NewSqlBuilder(mysqlConfig, logger)
-	userRepository := repositories.NewUserRepository(sqlBuilder, logger)
+	userRepository := repositories.NewUserRepository(logger, manager, sqlBuilder)
 	testService := services.NewTestService(logger, userRepository)
 	clientOptions, err := grpc.NewClientOptions(viper)
 	if err != nil {
@@ -114,13 +120,15 @@ func CreateApp(name string) (*ginny.Application, error) {
 
 // provider.go:
 
-var appProvider = wire.NewSet(newServe, ginny.AppProviderSet)
-
 // Create http/grpc Serve
 func newServe(
 	hs *http.Server,
 	cli *consul.Client,
 	gs *grpc.Server,
+
 ) ([]ginny.Serve, error) {
 	return []ginny.Serve{ginny.HttpServe(hs), ginny.GrpcServeWithConsul(gs, cli)}, nil
 }
+
+// appProvider
+var appProvider = wire.NewSet(log.ProviderSet, config.ProviderSet, jaeger.ProviderSet, newServe, ginny.AppProviderSet)

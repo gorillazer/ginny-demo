@@ -1,5 +1,5 @@
 app:
-  name: APP_NAME
+  name: github.com/gorillazer/ginny-demo
 config:
   provider: #remote config provider: etcd、consul
   endpoint:
@@ -38,3 +38,31 @@ mysql:
     - host: ${mysql_host}
       user: ${mysql_user}
       pass: ${mysql_pass}
+redis:
+  username:
+  password: ${redis_pass}
+  db: 0
+  pool_size:
+  standalone:
+    standalone_addrs:
+      - master: ${redis_host}
+        slaves:
+          - ${redis_host}
+  # sentinel:
+  #   master_name:
+  #   sentinel_addrs:
+  #     - ${redis_host}
+  #   sentinel_password:
+  # cluster:
+  #   cluster_addrs:
+  #     - ${redis_host}
+  #   max_redirects:
+# mongo:
+#   default_dbname:
+#   hosts:
+#     - ${mongo_host}
+#   auth:
+#     username:
+#     password:
+#   max_pool_size:
+#   min_pool_size:

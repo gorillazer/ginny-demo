@@ -1,16 +1,16 @@
 app:
-  name: APP_NAME
+  name: github.com/gorillazer/ginny-demo
 config:
   provider: #remote config provider: etcd、consul
-  endpoint: ${etcd_addr}
-  path: ${etcd_path}
+  endpoint:
+  path:
   types: json
 http:
   mode: release
   host: 127.0.0.1
   port: 9090
 grpc:
-  host: 127.0.0.1
+  host:
   port: 9000
 consul:
   address: ${consul_addr}

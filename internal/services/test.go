@@ -1,10 +1,13 @@
 package services
 
 import (
-	"github.com/gorillazer/ginny-demo/internal/repositories"
 	"context"
 
+	"github.com/gorillazer/ginny-demo/internal/constants"
+	"github.com/gorillazer/ginny-demo/internal/repositories"
+
 	"github.com/google/wire"
+	"github.com/gorillazer/ginny/errs"
 	"go.uber.org/zap"
 )
 
@@ -14,34 +17,33 @@ var TestServiceProvider = wire.NewSet(NewTestService, wire.Bind(new(ITestService
 // ITestService
 type ITestService interface {
 	Get(ctx context.Context, Id uint64) (string, error)
-	GetInfo(ctx context.Context) (string, error)
 }
 
 // TestService
 type TestService struct {
-	logger         *zap.Logger
+	logger *zap.Logger
+	// Introduce new dependencies here, exp:
 	userRepository *repositories.UserRepository
 }
 
 // NewTestService
-func NewTestService(logger *zap.Logger,
-	userRepository *repositories.UserRepository) *TestService {
+func NewTestService(
+	logger *zap.Logger,
+	userRepository *repositories.UserRepository,
+) *TestService {
 	return &TestService{
-		logger:         logger,
+		logger:         logger.With(zap.String("type", "Hello")),
 		userRepository: userRepository,
 	}
 }
 
-// Get
+//
 func (p *TestService) Get(ctx context.Context, Id uint64) (string, error) {
-	return "user.Name", nil
-}
-
-// GetInfo
-func (p *TestService) GetInfo(ctx context.Context) (string, error) {
 	user, err := p.userRepository.GetUser(ctx)
 	if err != nil {
-		return "", err
+		p.logger.Error("Get", zap.Error(err))
+		return "", errs.New(constants.ERR_GETINFO, constants.GetErrMsg(constants.ERR_GETINFO))
 	}
+
 	return user.Name, nil
 }

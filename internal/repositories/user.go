@@ -4,37 +4,57 @@ import (
 	"context"
 
 	"github.com/google/wire"
-	mysql "github.com/gorillazer/ginny-mysql"
 	"go.uber.org/zap"
+
+	mysql "github.com/gorillazer/ginny-mysql"
+	redis "github.com/gorillazer/ginny-redis"
+	// DATABASE_LIB 锚点请勿删除! Do not delete this line!
 )
 
+// UserRepositoryProvider
 var UserRepositoryProvider = wire.NewSet(NewUserRepository, wire.Bind(new(IUserRepository), new(*UserRepository)))
 
+// IUserRepository
 type IUserRepository interface {
 	GetUser(ctx context.Context) (*UserRepository, error)
 }
+
+// UserRepository
 type UserRepository struct {
 	Id   string `json:"id" bson:"_id"`
 	Name string `json:"name" bson:"name"`
 
-	sqlBuilder *mysql.SqlBuilder
-	logger     *zap.Logger
+	logger *zap.Logger
+
+	redis *redis.Manager
+	mysql *mysql.SqlBuilder
+	// STRUCT_ATTR 锚点请勿删除! Do not delete this line!
 }
 
-func NewUserRepository(sqlBuilder *mysql.SqlBuilder,
-	logger *zap.Logger) *UserRepository {
+// NewUserRepository
+func NewUserRepository(
+	logger *zap.Logger,
+
+	redis *redis.Manager,
+	mysql *mysql.SqlBuilder,
+	// FUNC_PARAM 锚点请勿删除! Do not delete this line!
+) *UserRepository {
 	return &UserRepository{
-		logger:     logger,
-		sqlBuilder: sqlBuilder,
+		logger: logger.With(zap.String("type", "UserRepository")),
+
+		redis: redis,
+		mysql: mysql,
+		// FUNC_ATTR 锚点请勿删除! Do not delete this line!
 	}
 }
 
 func (p *UserRepository) GetUser(ctx context.Context) (*UserRepository, error) {
-	user := &UserRepository{}
-	err := p.sqlBuilder.Find(ctx, user, "user", nil)
-	if err != nil {
-		p.logger.Error("UserRepository.GetUser", zap.Error(err))
+	r := &UserRepository{}
+	if err := p.mysql.Find(ctx, r, "user", nil); err != nil {
+		p.logger.Error("", zap.Error(err))
 		return nil, err
 	}
-	return user, nil
+	// p.mongo.Database.Collection("user").Find()
+	// p.redis.DB().Get(ctx, "user").Result()
+	return r, nil
 }

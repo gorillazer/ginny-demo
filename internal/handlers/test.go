@@ -7,6 +7,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
+
+	// "github.com/gorillazer/ginny/errs"
+
+	util "github.com/gorillazer/ginny-util"
 	"github.com/gorillazer/ginny/errs"
 	"github.com/gorillazer/ginny/res"
 	"github.com/spf13/viper"
@@ -24,8 +28,9 @@ type ITestHandler interface {
 
 // TestHandler
 type TestHandler struct {
-	v            *viper.Viper
-	logger       *zap.Logger
+	v      *viper.Viper
+	logger *zap.Logger
+	// Introduce new dependencies here, exp:
 	testService  *services.TestService
 	detailClient proto.DetailsClient
 }
@@ -46,15 +51,15 @@ func NewTestHandler(
 }
 
 func (t *TestHandler) Get(c *gin.Context) (*res.Response, error) {
-	t.logger.Debug("TestHandler.Get", zap.Any("TestHandler.Get", c.Params))
-	name, err := t.testService.GetInfo(c)
+	t.logger.Debug("TestHandler", zap.Any("TestHandler.Get", c.Params))
+	id := c.Query("id")
+	name, err := t.testService.Get(c, util.Uint64(id))
 	if err != nil {
-		t.logger.Error("TestHandler.Get", zap.Error(err))
+		t.logger.Error("", zap.Error(err))
 		return nil, errs.New(constants.ERR_GETINFO, constants.GetErrMsg(constants.ERR_GETINFO))
 	}
 	return res.Success(name), nil
 }
-
 func (t *TestHandler) GetRPC(c *gin.Context) (*res.Response, error) {
 	req := &proto.GetDetailRequest{
 		Id: 1,
@@ -62,7 +67,7 @@ func (t *TestHandler) GetRPC(c *gin.Context) (*res.Response, error) {
 	t.logger.Info(t.v.GetString("consul.address"))
 	p, err := t.detailClient.Get(c, req)
 	if err != nil {
-		t.logger.Error("TestHandler.GetRPC", zap.Error(err))
+		t.logger.Error("GetRPC", zap.Error(err))
 		return res.Fail(errs.New(constants.ERR_GETINFO, constants.GetErrMsg(constants.ERR_GETINFO))), nil
 	}
 	return res.Success(p.Name), nil
