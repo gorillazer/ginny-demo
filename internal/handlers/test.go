@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"github.com/gorillazer/ginny-demo/api/proto"
-	"github.com/gorillazer/ginny-demo/configs"
+	"github.com/gorillazer/ginny-demo/internal/constants"
 	"github.com/gorillazer/ginny-demo/internal/services"
 
 	"github.com/gin-gonic/gin"
@@ -50,7 +50,7 @@ func (t *TestHandler) Get(c *gin.Context) (*res.Response, error) {
 	name, err := t.testService.GetInfo(c)
 	if err != nil {
 		t.logger.Error("TestHandler.Get", zap.Error(err))
-		return nil, errs.New(configs.ERR_GETINFO, configs.GetErrMsg(configs.ERR_GETINFO))
+		return nil, errs.New(constants.ERR_GETINFO, constants.GetErrMsg(constants.ERR_GETINFO))
 	}
 	return res.Success(name), nil
 }
@@ -63,7 +63,7 @@ func (t *TestHandler) GetRPC(c *gin.Context) (*res.Response, error) {
 	p, err := t.detailClient.Get(c, req)
 	if err != nil {
 		t.logger.Error("TestHandler.GetRPC", zap.Error(err))
-		return res.Fail(errs.New(configs.ERR_GETINFO, configs.GetErrMsg(configs.ERR_GETINFO))), nil
+		return res.Fail(errs.New(constants.ERR_GETINFO, constants.GetErrMsg(constants.ERR_GETINFO))), nil
 	}
 	return res.Success(p.Name), nil
 }
