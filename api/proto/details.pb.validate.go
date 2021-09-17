@@ -33,23 +33,22 @@ var (
 	_ = anypb.Any{}
 )
 
-// Validate checks the field values on GetDetailRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, an
-// error is returned.
-func (m *GetDetailRequest) Validate() error {
+// Validate checks the field values on GetReq with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *GetReq) Validate() error {
 	if m == nil {
 		return nil
 	}
 
 	if m.GetId() <= 999 {
-		return GetDetailRequestValidationError{
+		return GetReqValidationError{
 			field:  "Id",
 			reason: "value must be greater than 999",
 		}
 	}
 
 	if utf8.RuneCountInString(m.GetName()) < 3 {
-		return GetDetailRequestValidationError{
+		return GetReqValidationError{
 			field:  "Name",
 			reason: "value length must be at least 3 runes",
 		}
@@ -58,9 +57,9 @@ func (m *GetDetailRequest) Validate() error {
 	return nil
 }
 
-// GetDetailRequestValidationError is the validation error returned by
-// GetDetailRequest.Validate if the designated constraints aren't met.
-type GetDetailRequestValidationError struct {
+// GetReqValidationError is the validation error returned by GetReq.Validate if
+// the designated constraints aren't met.
+type GetReqValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -68,22 +67,22 @@ type GetDetailRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e GetDetailRequestValidationError) Field() string { return e.field }
+func (e GetReqValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e GetDetailRequestValidationError) Reason() string { return e.reason }
+func (e GetReqValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e GetDetailRequestValidationError) Cause() error { return e.cause }
+func (e GetReqValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e GetDetailRequestValidationError) Key() bool { return e.key }
+func (e GetReqValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e GetDetailRequestValidationError) ErrorName() string { return "GetDetailRequestValidationError" }
+func (e GetReqValidationError) ErrorName() string { return "GetReqValidationError" }
 
 // Error satisfies the builtin error interface
-func (e GetDetailRequestValidationError) Error() string {
+func (e GetReqValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -95,14 +94,14 @@ func (e GetDetailRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sGetDetailRequest.%s: %s%s",
+		"invalid %sGetReq.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = GetDetailRequestValidationError{}
+var _ error = GetReqValidationError{}
 
 var _ interface {
 	Field() string
@@ -110,11 +109,11 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = GetDetailRequestValidationError{}
+} = GetReqValidationError{}
 
-// Validate checks the field values on Detail with the rules defined in the
+// Validate checks the field values on GetRes with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
-func (m *Detail) Validate() error {
+func (m *GetRes) Validate() error {
 	if m == nil {
 		return nil
 	}
@@ -127,7 +126,7 @@ func (m *Detail) Validate() error {
 
 	if v, ok := interface{}(m.GetCreatedTime()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return DetailValidationError{
+			return GetResValidationError{
 				field:  "CreatedTime",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -138,9 +137,9 @@ func (m *Detail) Validate() error {
 	return nil
 }
 
-// DetailValidationError is the validation error returned by Detail.Validate if
+// GetResValidationError is the validation error returned by GetRes.Validate if
 // the designated constraints aren't met.
-type DetailValidationError struct {
+type GetResValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -148,22 +147,22 @@ type DetailValidationError struct {
 }
 
 // Field function returns field value.
-func (e DetailValidationError) Field() string { return e.field }
+func (e GetResValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e DetailValidationError) Reason() string { return e.reason }
+func (e GetResValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e DetailValidationError) Cause() error { return e.cause }
+func (e GetResValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e DetailValidationError) Key() bool { return e.key }
+func (e GetResValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e DetailValidationError) ErrorName() string { return "DetailValidationError" }
+func (e GetResValidationError) ErrorName() string { return "GetResValidationError" }
 
 // Error satisfies the builtin error interface
-func (e DetailValidationError) Error() string {
+func (e GetResValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -175,14 +174,14 @@ func (e DetailValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sDetail.%s: %s%s",
+		"invalid %sGetRes.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = DetailValidationError{}
+var _ error = GetResValidationError{}
 
 var _ interface {
 	Field() string
@@ -190,4 +189,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = DetailValidationError{}
+} = GetResValidationError{}

@@ -1,13 +1,15 @@
 package server
 
 import (
-	"github.com/gorillazer/ginny-demo/api/proto"
-	"github.com/gorillazer/ginny-demo/internal/services"
 	"context"
 	"time"
 
-	"github.com/google/wire"
+	"github.com/gorillazer/ginny-demo/api/proto"
+	"github.com/gorillazer/ginny-demo/internal/constants"
+	"github.com/gorillazer/ginny-demo/internal/services"
 	"github.com/pkg/errors"
+
+	"github.com/google/wire"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"go.uber.org/zap"
@@ -18,7 +20,7 @@ var DetailsServerProvider = wire.NewSet(NewDetailsServer, wire.Bind(new(IDetails
 
 // IDetailsServer
 type IDetailsServer interface {
-	Get(ctx context.Context, req *proto.GetDetailRequest) (*proto.Detail, error)
+	Get(ctx context.Context, req *proto.GetReq) (*proto.GetRes, error)
 }
 
 // DetailsServer
@@ -32,19 +34,25 @@ func NewDetailsServer(
 	logger *zap.Logger,
 	testService *services.TestService,
 ) (*DetailsServer, error) {
-	return &DetailsServer{}, nil
+	return &DetailsServer{
+		logger:      logger.With(zap.String("type", "DetailsServer")),
+		testService: testService,
+	}, nil
 }
 
-func (s *DetailsServer) Get(ctx context.Context, req *proto.GetDetailRequest) (*proto.Detail, error) {
+func (s *DetailsServer) Get(ctx context.Context, req *proto.GetReq) (*proto.GetRes, error) {
+	if req == nil {
+		return nil, errors.New(constants.GetErrMsg(constants.PARAMS_INVALID))
+	}
 	p, err := s.testService.Get(ctx, req.Id)
 	if err != nil {
-		return nil, errors.Wrap(err, "details grpc service get detail error")
+		s.logger.Error("Get", zap.Error(err))
+		return nil, errors.Wrap(err, constants.GetErrMsg(constants.INTERNAL_ERR))
 	}
 	ct := timestamppb.New(time.Time{})
-	resp := &proto.Detail{
+	resp := &proto.GetRes{
 		Id:          req.Id,
 		Name:        p,
-		Price:       0,
 		CreatedTime: ct,
 	}
 

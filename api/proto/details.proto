@@ -1,16 +1,16 @@
 syntax = "proto3";
-import "google/protobuf/timestamp.proto";
 import "validate.proto";
+import "google/protobuf/timestamp.proto";
 option go_package = "./;proto";
 
-service Details { rpc Get(GetDetailRequest) returns (Detail); }
+service Details { rpc Get(GetReq) returns (GetRes); }
 
-message GetDetailRequest {
+message GetReq {
   uint64 id = 1 [ (validate.rules).uint64.gt = 999 ];
   string name = 2 [ (validate.rules).string.min_len = 3 ];
 }
 
-message Detail {
+message GetRes {
   uint64 id = 1;
   string name = 2;
   float price = 3;
