@@ -13,8 +13,9 @@ func CreateInitHandlerFn(
 ) http.InitHandlers {
 	return func(r *gin.Engine) {
 		// 在此定义路由规则 Define routing rules here, exp:
-		r.GET("/test/:id", res.Wrapper(test.Get))
-		r.GET("/test1/:id", res.Wrapper(test.GetRPC))
+		r.GET("/", res.Wrapper(test.Get))
+		r.GET("/test/:id", res.Wrapper(test.Test))
+		r.GET("/getrpc", res.Wrapper(test.GetRPC))
 	}
 }
 

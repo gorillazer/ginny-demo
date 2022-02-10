@@ -12,8 +12,8 @@ func NewDetailsClient(
 	client *grpc.Client,
 	consul *consul.Client,
 ) (proto.DetailsClient, error) {
-	// conn, err := client.Dial("Details", grpc.WithTarget("127.0.0.1:9000"))
-	conn, err := client.Dial("Details", grpc.WithConsulConfig(consul.Config))
+	conn, err := client.Dial("Details", grpc.WithTarget("10.95.19.67:3000"))
+	// conn, err := client.Dial("Details", grpc.WithConsulConfig(consul.Config))
 	if err != nil {
 		return nil, errors.Wrap(err, "detail client dial error")
 	}

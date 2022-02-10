@@ -6,7 +6,7 @@ option go_package = "./;proto";
 service Details { rpc Get(GetReq) returns (GetRes); }
 
 message GetReq {
-  uint64 id = 1 [ (validate.rules).uint64.gt = 999 ];
+  uint64 id = 1 [ (validate.rules).uint64.gt = 0 ];
   string name = 2 [ (validate.rules).string.min_len = 3 ];
 }
 

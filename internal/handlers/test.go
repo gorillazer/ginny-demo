@@ -23,6 +23,7 @@ var TestHandlerProvider = wire.NewSet(NewTestHandler, wire.Bind(new(ITestHandler
 // ITestHandler
 type ITestHandler interface {
 	Get(c *gin.Context) (*res.Response, error)
+	Test(c *gin.Context) (*res.Response, error)
 	GetRPC(c *gin.Context) (*res.Response, error)
 }
 
@@ -53,6 +54,12 @@ func NewTestHandler(
 // Get
 func (t *TestHandler) Get(c *gin.Context) (*res.Response, error) {
 	t.logger.Debug("TestHandler", zap.Any("TestHandler.Get", c.Params))
+	return nil, nil
+}
+
+// Test
+func (t *TestHandler) Test(c *gin.Context) (*res.Response, error) {
+	t.logger.Debug("TestHandler", zap.Any("TestHandler.Test", c.Params))
 	id := c.Query("id")
 	name, err := t.testService.Get(c, util.Uint64(id))
 	if err != nil {
@@ -65,7 +72,8 @@ func (t *TestHandler) Get(c *gin.Context) (*res.Response, error) {
 // GetRPC
 func (t *TestHandler) GetRPC(c *gin.Context) (*res.Response, error) {
 	req := &proto.GetReq{
-		Id: 1,
+		Id:   999,
+		Name: "aaa",
 	}
 	t.logger.Info(t.v.GetString("consul.address"))
 	p, err := t.detailClient.Get(c, req)

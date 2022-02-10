@@ -40,10 +40,10 @@ func (m *GetReq) Validate() error {
 		return nil
 	}
 
-	if m.GetId() <= 999 {
+	if m.GetId() <= 0 {
 		return GetReqValidationError{
 			field:  "Id",
-			reason: "value must be greater than 999",
+			reason: "value must be greater than 0",
 		}
 	}
 

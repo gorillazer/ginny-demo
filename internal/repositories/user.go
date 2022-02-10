@@ -7,6 +7,7 @@ import (
 	"go.uber.org/zap"
 
 	mysql "github.com/gorillazer/ginny-mysql"
+	// mongo "github.com/gorillazer/ginny-mongo"
 	redis "github.com/gorillazer/ginny-redis"
 	// DATABASE_LIB 锚点请勿删除! Do not delete this line!
 )
@@ -28,6 +29,7 @@ type UserRepository struct {
 
 	redis *redis.Manager
 	mysql *mysql.SqlBuilder
+	// mongo *mongo.Manager
 	// STRUCT_ATTR 锚点请勿删除! Do not delete this line!
 }
 
@@ -37,6 +39,7 @@ func NewUserRepository(
 
 	redis *redis.Manager,
 	mysql *mysql.SqlBuilder,
+	// mongo *mongo.Manager,
 	// FUNC_PARAM 锚点请勿删除! Do not delete this line!
 ) *UserRepository {
 	return &UserRepository{
@@ -44,17 +47,21 @@ func NewUserRepository(
 
 		redis: redis,
 		mysql: mysql,
+		// mongo: mongo,
 		// FUNC_ATTR 锚点请勿删除! Do not delete this line!
 	}
 }
 
 func (p *UserRepository) GetUser(ctx context.Context) (*UserRepository, error) {
 	r := &UserRepository{}
-	if err := p.mysql.Find(ctx, r, "user", nil); err != nil {
-		p.logger.Error("", zap.Error(err))
-		return nil, err
-	}
-	// p.mongo.Database.Collection("user").Find()
+	// if err := p.mysql.Find(ctx, r, "user", nil); err != nil {
+	// 	p.logger.Error("", zap.Error(err))
+	// 	return nil, err
+	// }
+
+	// if _, err := p.mongo.Database.Collection("user").Find(ctx, nil); err != nil {
+	// 	return nil, err
+	// }
 	// p.redis.DB().Get(ctx, "user").Result()
 	return r, nil
 }

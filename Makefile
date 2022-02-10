@@ -1,6 +1,6 @@
 # 发布时根据情况修改
 APP = APP_NAME
-CONF = dev.yaml
+CONF = dev.yml
 #-------------------------------------	
 .PHONY: run
 run: tidy proto wire

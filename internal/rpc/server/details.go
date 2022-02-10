@@ -47,7 +47,7 @@ func (s *DetailsServer) Get(ctx context.Context, req *proto.GetReq) (*proto.GetR
 	p, err := s.testService.Get(ctx, req.Id)
 	if err != nil {
 		s.logger.Error("Get", zap.Error(err))
-		return nil, errors.Wrap(err, constants.GetErrMsg(constants.INTERNAL_ERR))
+		return nil, err
 	}
 	ct := timestamppb.New(time.Time{})
 	resp := &proto.GetRes{

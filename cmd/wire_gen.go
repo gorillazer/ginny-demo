@@ -13,7 +13,6 @@ import (
 	"github.com/gorillazer/ginny-demo/internal/handlers"
 	"github.com/gorillazer/ginny-demo/internal/repositories"
 	"github.com/gorillazer/ginny-demo/internal/rpc/client"
-	"github.com/gorillazer/ginny-demo/internal/rpc/server"
 	"github.com/gorillazer/ginny-demo/internal/services"
 	"github.com/gorillazer/ginny-jaeger"
 	"github.com/gorillazer/ginny-log"
@@ -90,24 +89,11 @@ func CreateApp(name string) (*ginny.Application, error) {
 	testHandler := handlers.NewTestHandler(viper, logger, testService, detailsClient)
 	initHandlers := handlers.CreateInitHandlerFn(testHandler)
 	engine := http.NewRouter(serverOption, logger, tracer, initHandlers)
-	httpServer, err := http.NewServer(serverOption, logger, engine)
+	server, err := http.NewServer(serverOption, logger, engine)
 	if err != nil {
 		return nil, err
 	}
-	grpcServerOption, err := grpc.NewOptions(viper)
-	if err != nil {
-		return nil, err
-	}
-	detailsServer, err := server.NewDetailsServer(logger, testService)
-	if err != nil {
-		return nil, err
-	}
-	initServers := server.CreateInitServerFn(detailsServer)
-	grpcServer, err := grpc.NewServer(grpcServerOption, logger, tracer, initServers)
-	if err != nil {
-		return nil, err
-	}
-	v, err := newServe(httpServer, consulClient, grpcServer)
+	v, err := newServe(server, consulClient)
 	if err != nil {
 		return nil, err
 	}
@@ -124,10 +110,9 @@ func CreateApp(name string) (*ginny.Application, error) {
 func newServe(
 	hs *http.Server,
 	cli *consul.Client,
-	gs *grpc.Server,
 
 ) ([]ginny.Serve, error) {
-	return []ginny.Serve{ginny.HttpServe(hs), ginny.GrpcServeWithConsul(gs, cli)}, nil
+	return []ginny.Serve{ginny.HttpServe(hs)}, nil
 }
 
 // appProvider

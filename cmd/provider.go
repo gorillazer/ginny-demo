@@ -6,8 +6,6 @@ import (
 	"github.com/gorillazer/ginny-demo/internal/handlers"
 	"github.com/gorillazer/ginny-demo/internal/repositories"
 	rpc "github.com/gorillazer/ginny-demo/internal/rpc"
-	rpc_client "github.com/gorillazer/ginny-demo/internal/rpc/client"
-	rpc_server "github.com/gorillazer/ginny-demo/internal/rpc/server"
 	"github.com/gorillazer/ginny-demo/internal/services"
 	// CMD_IMPORT 锚点请勿删除! Do not delete this line!
 
@@ -17,7 +15,7 @@ import (
 	consul "github.com/gorillazer/ginny-consul"
 	jaeger "github.com/gorillazer/ginny-jaeger"
 	log "github.com/gorillazer/ginny-log"
-	grpc "github.com/gorillazer/ginny-serve/grpc"
+	// grpc "github.com/gorillazer/ginny-serve/grpc"
 	http "github.com/gorillazer/ginny-serve/http"
 )
 
@@ -25,13 +23,13 @@ import (
 func newServe(
 	hs *http.Server,
 	cli *consul.Client,
-	gs *grpc.Server,
+	// gs *grpc.Server,
 	// CMD_SERVEPARAM 锚点请勿删除! Do not delete this line!
 
 ) ([]ginny.Serve, error) {
 	return []ginny.Serve{
 		ginny.HttpServe(hs),
-		ginny.GrpcServeWithConsul(gs, cli),
+		// ginny.GrpcServeWithConsul(gs, cli),
 		// CMD_SERVEFUNC 锚点请勿删除! Do not delete this line!
 
 	}, nil
@@ -50,8 +48,6 @@ func CreateApp(name string) (*ginny.Application, error) {
 
 		// grpc
 		rpc.ProviderSet,
-		rpc_server.ProviderSet,
-		rpc_client.ProviderSet,
 
 		handlers.ProviderSet,
 		repositories.ProviderSet,
