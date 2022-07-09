@@ -1,6 +1,6 @@
 # Ginny-demo 
 
-Application created by [Ginny](https://github.com/gorillazer/ginny).
+Application created by [Ginny](https://github.com/goriller/ginny).
 
 # 配置
 

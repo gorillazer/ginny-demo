@@ -1,14 +1,12 @@
-package repositories
+package repo
 
 import (
 	"context"
 
 	"github.com/google/wire"
-	"go.uber.org/zap"
-
-	mysql "github.com/gorillazer/ginny-mysql"
-	// mongo "github.com/gorillazer/ginny-mongo"
-	redis "github.com/gorillazer/ginny-redis"
+	// mysql "github.com/goriller/ginny-mysql"
+	// mongo "github.com/goriller/ginny-mongo"
+	// redis "github.com/goriller/ginny-redis"
 	// DATABASE_LIB 锚点请勿删除! Do not delete this line!
 )
 
@@ -25,28 +23,23 @@ type UserRepository struct {
 	Id   string `json:"id" bson:"_id"`
 	Name string `json:"name" bson:"name"`
 
-	logger *zap.Logger
-
-	redis *redis.Manager
-	mysql *mysql.SqlBuilder
+	// redis *redis.Manager
+	// mysql *mysql.SqlBuilder
 	// mongo *mongo.Manager
 	// STRUCT_ATTR 锚点请勿删除! Do not delete this line!
 }
 
 // NewUserRepository
 func NewUserRepository(
-	logger *zap.Logger,
-
-	redis *redis.Manager,
-	mysql *mysql.SqlBuilder,
-	// mongo *mongo.Manager,
-	// FUNC_PARAM 锚点请勿删除! Do not delete this line!
+// redis *redis.Manager,
+// mysql *mysql.SqlBuilder,
+// mongo *mongo.Manager,
+// FUNC_PARAM 锚点请勿删除! Do not delete this line!
 ) *UserRepository {
 	return &UserRepository{
-		logger: logger.With(zap.String("type", "UserRepository")),
 
-		redis: redis,
-		mysql: mysql,
+		// redis: redis,
+		// mysql: mysql,
 		// mongo: mongo,
 		// FUNC_ATTR 锚点请勿删除! Do not delete this line!
 	}

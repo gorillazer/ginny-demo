@@ -1,22 +1,16 @@
-module github.com/gorillazer/ginny-demo
+module github.com/goriller/ginny-demo
 
 go 1.16
 
 require (
-	github.com/gin-gonic/gin v1.7.4
+	github.com/envoyproxy/protoc-gen-validate v0.1.0
 	github.com/google/wire v0.5.0
-	github.com/gorillazer/ginny v0.1.3
-	github.com/gorillazer/ginny-config v0.0.2
-	github.com/gorillazer/ginny-consul v0.0.2
-	github.com/gorillazer/ginny-jaeger v0.0.1
-	github.com/gorillazer/ginny-log v0.0.2
-	github.com/gorillazer/ginny-mysql v0.0.0-20210830084414-f9ee1490fe2f
-	github.com/gorillazer/ginny-redis v0.0.0-20210830084339-bf8eebe3e1fb
-	github.com/gorillazer/ginny-serve v0.0.13
-	github.com/gorillazer/ginny-util v0.0.3
-	github.com/pkg/errors v0.9.1
-	github.com/spf13/viper v1.8.1
-	go.uber.org/zap v1.19.0
-	google.golang.org/grpc v1.40.0
-	google.golang.org/protobuf v1.26.0
+	github.com/goriller/ginny v0.2.9
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.10.3
+	github.com/spf13/viper v1.12.0
+	go.uber.org/automaxprocs v1.5.1
+	go.uber.org/zap v1.21.0
+	google.golang.org/genproto v0.0.0-20220519153652-3a47de7e79bd
+	google.golang.org/grpc v1.46.2
+	google.golang.org/protobuf v1.28.0
 )
