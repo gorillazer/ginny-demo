@@ -1,5 +1,5 @@
 app:
-  name: github.com/gorillazer/ginny-demo
+  name: github.com/goriller/ginny-demo
 config:
   provider: #remote config provider: etcd、consul
   endpoint:

@@ -1,6 +1,7 @@
 # 发布时根据情况修改
 APP = APP_NAME
-CONF = dev.yaml
+CONF = dev.yml
+PROTO_IMG = richenlin/protoc:latest
 #-------------------------------------	
 .PHONY: run
 run: tidy proto wire
@@ -11,7 +12,7 @@ tidy:
 	go mod tidy
 #-------------------------------------	
 .PHONY: wire
-wire: tidy
+wire: 
 	wire ./...
 #-------------------------------------	
 .PHONY: test
@@ -38,15 +39,16 @@ lint:
 # fetches this repo into $GOPATH
 # go install github.com/envoyproxy/protoc-gen-validate@latest
 # go install github.com/golang/protobuf/protoc-gen-go@latest
-.PHONY: proto
-proto:
-	protoc \
-  -I api/proto \
-  --go_out="plugins=grpc:api/proto" \
-  --validate_out="lang=go:api/proto" \
-  ./api/proto/*.proto
+.PHONY: protoc
+protoc:
+	docker run --rm -v $(shell pwd):/build/go -v $(shell pwd):/build/proto ${PROTO_IMG}
+# protoc \
+# -I api/proto \
+# --go_out="plugins=grpc:api/proto" \
+# --validate_out="lang=go:api/proto" \
+# ./api/proto/*.proto
 #-------------------------------------	
 .PHONY: docker
 docker-compose: build dash rules
-	docker-compose -f build/docker-compose.yml up --build -d
+	docker-compose -f deploy/docker-compose.yml up --build -d
 all: lint cover docker
