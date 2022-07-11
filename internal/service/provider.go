@@ -1,6 +1,8 @@
 package service
 
 import (
+	"context"
+
 	"github.com/google/wire"
 	"github.com/goriller/ginny"
 	pb "github.com/goriller/ginny-demo/api/proto"
@@ -33,14 +35,14 @@ func NewService(
 }
 
 // RegisterService
-func RegisterService(sev *Service) ginny.RegistrarFunc {
+func RegisterService(ctx context.Context, sev *Service) ginny.RegistrarFunc {
 	return func(app *ginny.Application) error {
 		// 注册gRPC服务
 		app.Server.RegisterService(&pb.Say_ServiceDesc, sev)
 
 		if app.Option.HttpAddr != "" {
 			// 注册http服务
-			if err := pb.RegisterSayHandlerServer(app.Ctx, app.Server.ServeMux(), sev); err != nil {
+			if err := pb.RegisterSayHandlerServer(ctx, app.Server.ServeMux(), sev); err != nil {
 				return err
 			}
 		}
