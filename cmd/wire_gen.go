@@ -33,11 +33,11 @@ func NewApp() (*ginny.Application, error) {
 		return nil, err
 	}
 	zapLogger := logger.Default()
+	context := ginny.GetContext()
 	configConfig, err := config2.NewConfig(viper)
 	if err != nil {
 		return nil, err
 	}
-	context := ginny.GetContext()
 	mysqlConfig, err := mysql.NewConfig(viper)
 	if err != nil {
 		return nil, err
@@ -45,7 +45,7 @@ func NewApp() (*ginny.Application, error) {
 	sqlBuilder := mysql.NewSqlBuilder(context, mysqlConfig, zapLogger)
 	userRepository := repo.NewUserRepository(sqlBuilder)
 	serviceService := service.NewService(configConfig, userRepository)
-	registrarFunc := service.RegisterService(serviceService)
+	registrarFunc := service.RegisterService(context, serviceService)
 	v := serverOption()
 	application, err := ginny.NewApp(option, zapLogger, registrarFunc, v...)
 	if err != nil {
