@@ -4,8 +4,11 @@ go 1.16
 
 require (
 	github.com/envoyproxy/protoc-gen-validate v0.1.0
+	github.com/go-redis/redis/v8 v8.11.5
 	github.com/google/wire v0.5.0
-	github.com/goriller/ginny v0.2.9
+	github.com/goriller/ginny v0.2.10
+	github.com/goriller/ginny-mysql v0.0.1
+	github.com/goriller/ginny-redis v0.0.1
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.10.3
 	github.com/spf13/viper v1.12.0
 	go.uber.org/automaxprocs v1.5.1

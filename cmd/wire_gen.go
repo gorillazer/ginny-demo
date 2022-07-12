@@ -10,6 +10,7 @@ import (
 	config2 "github.com/goriller/ginny-demo/internal/config"
 	"github.com/goriller/ginny-demo/internal/repo"
 	"github.com/goriller/ginny-demo/internal/service"
+	"github.com/goriller/ginny-mysql"
 	"github.com/goriller/ginny/config"
 	"github.com/goriller/ginny/logger"
 	"github.com/goriller/ginny/server"
@@ -32,13 +33,19 @@ func NewApp() (*ginny.Application, error) {
 		return nil, err
 	}
 	zapLogger := logger.Default()
+	context := ginny.GetContext()
 	configConfig, err := config2.NewConfig(viper)
 	if err != nil {
 		return nil, err
 	}
-	userRepository := repo.NewUserRepository()
-	serviceService := service.NewService(configConfig, userRepository)
-	registrarFunc := service.RegisterService(serviceService)
+	mysqlConfig, err := mysql.NewConfig(viper)
+	if err != nil {
+		return nil, err
+	}
+	sqlBuilder := mysql.NewSqlBuilder(context, mysqlConfig, zapLogger)
+	userRepo := repo.NewUserRepo(sqlBuilder)
+	serviceService := service.NewService(configConfig, userRepo)
+	registrarFunc := service.RegisterService(context, serviceService)
 	v := serverOption()
 	application, err := ginny.NewApp(option, zapLogger, registrarFunc, v...)
 	if err != nil {
