@@ -251,8 +251,8 @@ github.com/goriller/ginny v0.2.10 h1:jiEnda6oGOi87BCTrxR0aYUPdLBP4FPmxl7rrY5udyY
 github.com/goriller/ginny v0.2.10/go.mod h1:nsS2fSQW5hQ/F3wlIA4qUfqyB1k+HABtWMRfrBujRIM=
 github.com/goriller/ginny-mysql v0.0.1 h1:GRGV+WjYQjCU9zaxf0htecIOxkHyBzocq+50oIDlW1g=
 github.com/goriller/ginny-mysql v0.0.1/go.mod h1:9hwIYOnnzIi2Kvk1rY9jha9/erLQrTMhlioy16RqnqA=
-github.com/goriller/ginny-redis v0.0.0-20220711042739-87e2c3875c2f h1:GRe10r1YTUA24iRchzZaVsv2F2dr+dEVJqO/R8sCYQc=
-github.com/goriller/ginny-redis v0.0.0-20220711042739-87e2c3875c2f/go.mod h1:hKgeOLEnZ+qNVKb/f7gBGxm0Z6Yd7iQl0lOLvTRg4kg=
+github.com/goriller/ginny-redis v0.0.1 h1:Fo53ouOudmGNKg2uIHCbb/tehP/MGGp8a/njMwC15QM=
+github.com/goriller/ginny-redis v0.0.1/go.mod h1:hKgeOLEnZ+qNVKb/f7gBGxm0Z6Yd7iQl0lOLvTRg4kg=
 github.com/goriller/ginny-util/graceful v0.0.0-20220709134416-d6e877023877/go.mod h1:ePHs6ATwfdeS6OnkHP+1rJfGfNRyfDSAfDwtf6yqPMg=
 github.com/goriller/ginny-util/graceful v0.0.0-20220709134815-ff6d5a5ef0dd h1:mvigWk37exqFAYplXJqX9xDhDP1ZmI2zVGHw5BOczXg=
 github.com/goriller/ginny-util/graceful v0.0.0-20220709134815-ff6d5a5ef0dd/go.mod h1:ePHs6ATwfdeS6OnkHP+1rJfGfNRyfDSAfDwtf6yqPMg=

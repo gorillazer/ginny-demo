@@ -19,13 +19,13 @@ type Service struct {
 	pb.UnimplementedSayServer
 	config *config.Config
 	// Introduce new dependencies here, exp:
-	userRepository *repo.UserRepository
+	userRepository *repo.UserRepo
 }
 
 // NewService new service that implement hello
 func NewService(
 	config *config.Config,
-	userRepository *repo.UserRepository,
+	userRepository *repo.UserRepo,
 ) *Service {
 	mux.RegisterErrorCodes(pb.ErrorCode_name)
 	return &Service{

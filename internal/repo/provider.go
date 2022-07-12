@@ -14,6 +14,6 @@ var ProviderSet = wire.NewSet(
 	mysql.Provider,
 	// mongo.Provider,
 	// DATABASE_PROVIDER 锚点请勿删除! Do not delete this line!
-	UserRepositoryProvider,
+	UserRepoProvider,
 	// REPO_PROVIDER 锚点请勿删除! Do not delete this line!
 )

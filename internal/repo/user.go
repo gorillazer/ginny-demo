@@ -6,36 +6,38 @@ import (
 	"github.com/google/wire"
 	"github.com/goriller/ginny-demo/internal/repo/entity"
 	mysql "github.com/goriller/ginny-mysql"
+	"github.com/goriller/ginny/logger"
+	"go.uber.org/zap"
 	// mongo "github.com/goriller/ginny-mongo"
 	// redis "github.com/goriller/ginny-redis"
 	// DATABASE_LIB 锚点请勿删除! Do not delete this line!
 )
 
-// UserRepositoryProvider
-var UserRepositoryProvider = wire.NewSet(NewUserRepository,
-	wire.Bind(new(IUserRepository), new(*UserRepository)))
+// UserRepoProvider
+var UserRepoProvider = wire.NewSet(NewUserRepo,
+	wire.Bind(new(IUserRepo), new(*UserRepo)))
 
-// IUserRepository
-type IUserRepository interface {
+// IUserRepo
+type IUserRepo interface {
 	GetUser(ctx context.Context) (*entity.UserEntity, error)
 }
 
-// UserRepository
-type UserRepository struct {
+// UserRepo
+type UserRepo struct {
 	// redis *redis.Manager
 	mysql *mysql.SqlBuilder
 	// mongo *mongo.Manager
 	// STRUCT_ATTR 锚点请勿删除! Do not delete this line!
 }
 
-// NewUserRepository
-func NewUserRepository(
+// NewUserRepo
+func NewUserRepo(
 	// redis *redis.Manager,
 	mysql *mysql.SqlBuilder,
 	// mongo *mongo.Manager,
 	// FUNC_PARAM 锚点请勿删除! Do not delete this line!
-) *UserRepository {
-	return &UserRepository{
+) *UserRepo {
+	return &UserRepo{
 
 		// redis: redis,
 		mysql: mysql,
@@ -44,10 +46,11 @@ func NewUserRepository(
 	}
 }
 
-func (p *UserRepository) GetUser(ctx context.Context) (*entity.UserEntity, error) {
+func (p *UserRepo) GetUser(ctx context.Context) (*entity.UserEntity, error) {
 	r := &entity.UserEntity{}
+	log := logger.WithContext(ctx).With(zap.String("action", "GetUser"))
 	// if err := p.mysql.Find(ctx, r, r.TableName(), nil); err != nil {
-	// 	p.logger.Error("", zap.Error(err))
+	// 	log.Error("", zap.Error(err))
 	// 	return nil, err
 	// }
 
@@ -55,5 +58,6 @@ func (p *UserRepository) GetUser(ctx context.Context) (*entity.UserEntity, error
 	// 	return nil, err
 	// }
 	// p.redis.DB().Get(ctx, r.TableName()).Result()
+	log.Debug("GetUser")
 	return r, nil
 }

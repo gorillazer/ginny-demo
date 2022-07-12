@@ -43,8 +43,8 @@ func NewApp() (*ginny.Application, error) {
 		return nil, err
 	}
 	sqlBuilder := mysql.NewSqlBuilder(context, mysqlConfig, zapLogger)
-	userRepository := repo.NewUserRepository(sqlBuilder)
-	serviceService := service.NewService(configConfig, userRepository)
+	userRepo := repo.NewUserRepo(sqlBuilder)
+	serviceService := service.NewService(configConfig, userRepo)
 	registrarFunc := service.RegisterService(context, serviceService)
 	v := serverOption()
 	application, err := ginny.NewApp(option, zapLogger, registrarFunc, v...)

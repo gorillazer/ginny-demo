@@ -27,7 +27,7 @@ func NewRedisCache(
 	redis *gredis.Redis,
 ) *RedisCache {
 	return &RedisCache{
-		redis: redis.DB(),
+		redis: redis.Client(),
 	}
 }
 
