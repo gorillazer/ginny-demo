@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/google/wire"
+	"github.com/goriller/ginny-demo/internal/config"
 	"github.com/goriller/ginny-demo/internal/repo/entity"
 	mysql "github.com/goriller/ginny-mysql"
 	"github.com/goriller/ginny/logger"
@@ -24,6 +25,7 @@ type IUserRepo interface {
 
 // UserRepo
 type UserRepo struct {
+	config *config.Config
 	// redis *redis.Manager
 	mysql *mysql.SqlBuilder
 	// mongo *mongo.Manager
@@ -32,13 +34,14 @@ type UserRepo struct {
 
 // NewUserRepo
 func NewUserRepo(
+	config *config.Config,
 	// redis *redis.Manager,
 	mysql *mysql.SqlBuilder,
 	// mongo *mongo.Manager,
 	// FUNC_PARAM 锚点请勿删除! Do not delete this line!
 ) *UserRepo {
 	return &UserRepo{
-
+		config: config,
 		// redis: redis,
 		mysql: mysql,
 		// mongo: mongo,
