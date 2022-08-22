@@ -9,11 +9,11 @@ require (
 	github.com/goriller/ginny v0.2.12
 	github.com/goriller/ginny-mysql v0.0.2
 	github.com/goriller/ginny-redis v0.0.2
-	github.com/grpc-ecosystem/grpc-gateway/v2 v2.11.0
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.11.2
 	github.com/spf13/viper v1.12.0
 	go.uber.org/automaxprocs v1.5.1
-	go.uber.org/zap v1.21.0
-	google.golang.org/genproto v0.0.0-20220725144611-272f38e5d71b
+	go.uber.org/zap v1.22.0
+	google.golang.org/genproto v0.0.0-20220819174105-e9f053255caa
 	google.golang.org/grpc v1.48.0
-	google.golang.org/protobuf v1.28.0
+	google.golang.org/protobuf v1.28.1
 )
