@@ -246,12 +246,12 @@ github.com/googleapis/gax-go/v2 v2.3.0/go.mod h1:b8LNqSzNabLiUpXKkY7HAR5jr6bIT99
 github.com/googleapis/gax-go/v2 v2.4.0/go.mod h1:XOTVJ59hdnfJLIP/dh8n5CGryZR2LxK9wbMD5+iXC6c=
 github.com/googleapis/go-type-adapters v1.0.0/go.mod h1:zHW75FOG2aur7gAO2B+MLby+cLsWGBF62rFAi7WjWO4=
 github.com/googleapis/google-cloud-go-testing v0.0.0-20200911160855-bcd43fbb19e8/go.mod h1:dvDLG8qkwmyD9a/MJJN3XJcT3xFxOKAvTZGvuZmac9g=
-github.com/goriller/ginny v0.2.12 h1:tzX4zQC5ShAO6qyz/4L6zMEV4g1N1Fhs622cYZ78WRI=
-github.com/goriller/ginny v0.2.12/go.mod h1:K6xWqzTw1FxqKoYbZjqTQvqkDGXvJmKsGJd5mNnf9EI=
-github.com/goriller/ginny-mysql v0.0.2 h1:x+w1ElaMmDGS3fQk6P3lGmxpNbQ2tcQhgnwUbYg0JXM=
-github.com/goriller/ginny-mysql v0.0.2/go.mod h1:9hwIYOnnzIi2Kvk1rY9jha9/erLQrTMhlioy16RqnqA=
-github.com/goriller/ginny-redis v0.0.2 h1:i2/O6RONt+jG/o87bDY5YW0ytInXYFEyW9wncaRX4n0=
-github.com/goriller/ginny-redis v0.0.2/go.mod h1:/eDTlyagaE862OtSh83ErMzznGdT6F7Rvgd/0B//hIs=
+github.com/goriller/ginny v0.2.15 h1:X4oH9/BR1MAF74goX1Krd5z4fpqnoh3fVi0wKqJIMp0=
+github.com/goriller/ginny v0.2.15/go.mod h1:K6xWqzTw1FxqKoYbZjqTQvqkDGXvJmKsGJd5mNnf9EI=
+github.com/goriller/ginny-mysql v0.0.3 h1:ViH6s7gcjeEwsQKflJqMsXtomM9Zb2QUEavV2QP2gdo=
+github.com/goriller/ginny-mysql v0.0.3/go.mod h1:PRLNfYVBnj9VekRCEL1w6O/zmp/y9wwnYaSm9B0zGG4=
+github.com/goriller/ginny-redis v0.0.3 h1:mrP8FNqwKPPSyDsLS5uoeJnP/iJKgiv3CDVNA8edMtU=
+github.com/goriller/ginny-redis v0.0.3/go.mod h1:5jv7lc0ldrj1CfljHWFUCYQDSwO1Ak0yAP9z40X+gHw=
 github.com/goriller/ginny-util/graceful v0.0.0-20220709134815-ff6d5a5ef0dd h1:mvigWk37exqFAYplXJqX9xDhDP1ZmI2zVGHw5BOczXg=
 github.com/goriller/ginny-util/graceful v0.0.0-20220709134815-ff6d5a5ef0dd/go.mod h1:ePHs6ATwfdeS6OnkHP+1rJfGfNRyfDSAfDwtf6yqPMg=
 github.com/goriller/ginny-util/ip v0.0.0-20220709134815-ff6d5a5ef0dd h1:l6Obpfm7geP6zoQ2Zog4NLIqA9r4nvYsfG+fnP6N0bM=
@@ -935,8 +935,6 @@ google.golang.org/genproto v0.0.0-20220616135557-88e70c0c3a90/go.mod h1:KEWEmljW
 google.golang.org/genproto v0.0.0-20220719170305-83ca9fad585f/go.mod h1:GkXuJDJ6aQ7lnJcRF+SJVgFdQhypqgl3LB1C9vabdRE=
 google.golang.org/genproto v0.0.0-20220722212130-b98a9ff5e252/go.mod h1:GkXuJDJ6aQ7lnJcRF+SJVgFdQhypqgl3LB1C9vabdRE=
 google.golang.org/genproto v0.0.0-20220805133916-01dd62135a58/go.mod h1:iHe1svFLAZg9VWz891+QbRMwUv9O/1Ww+/mngYeThbc=
-google.golang.org/genproto v0.0.0-20220817144833-d7fd3f11b9b1 h1:C2UVWqrgLYKrT5nh5oU6hLRm1AeEklCK5eloQA1NtFY=
-google.golang.org/genproto v0.0.0-20220817144833-d7fd3f11b9b1/go.mod h1:dbqgFATTzChvnt+ujMdZwITVAJHFtfyN1qUhDqEiIlk=
 google.golang.org/genproto v0.0.0-20220819174105-e9f053255caa h1:Ux9yJCyf598uEniFPSyp8g1jtGTt77m+lzYyVgrWQaQ=
 google.golang.org/genproto v0.0.0-20220819174105-e9f053255caa/go.mod h1:dbqgFATTzChvnt+ujMdZwITVAJHFtfyN1qUhDqEiIlk=
 google.golang.org/grpc v1.18.0/go.mod h1:6QZJwpn2B+Zp71q/5VxRsJ6NXXVCE5NRUHRo+f3cWCs=
