@@ -13,11 +13,13 @@ consul:
 jaeger:
   serviceName: test
   reporter:
-    localAgentHostPort: "jaeger-agent:6831"
+    localAgentHostPort: ${jaeger_agent}
   sampler:
     type: const
     param: 1
-
+broker:
+  dsn: ${broker_dsn}
+  topic: kafkatest
 mysql:
   db_name: test
   wdb:

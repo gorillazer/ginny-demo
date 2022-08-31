@@ -15,13 +15,18 @@ var (
 
 // Config
 type Config struct {
-	Test string
+	Broker Broker
+}
+
+// Broker
+type Broker struct {
+	Topic string
 }
 
 // NewConfig
 func NewConfig(v *viper.Viper) (*Config, error) {
 	o := &Config{}
-	if err := v.UnmarshalKey("config", o); err != nil {
+	if err := v.Unmarshal(o); err != nil {
 		return nil, err
 	}
 	appConfig.Store(o)

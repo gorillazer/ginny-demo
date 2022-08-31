@@ -8,9 +8,11 @@ package main
 import (
 	"context"
 	"github.com/goriller/ginny"
+	"github.com/goriller/ginny-broker"
 	config2 "github.com/goriller/ginny-demo/internal/config"
 	"github.com/goriller/ginny-demo/internal/repo"
 	"github.com/goriller/ginny-demo/internal/service"
+	"github.com/goriller/ginny-demo/internal/task"
 	"github.com/goriller/ginny-mysql"
 	"github.com/goriller/ginny/config"
 	"github.com/goriller/ginny/logger"
@@ -38,6 +40,17 @@ func NewApp(ctx context.Context) (*ginny.Application, error) {
 	if err != nil {
 		return nil, err
 	}
+	brokerConfig, err := broker.NewConfiguration(viper)
+	if err != nil {
+		return nil, err
+	}
+	brokerBroker, err := broker.NewBroker(ctx, zapLogger, brokerConfig)
+	if err != nil {
+		return nil, err
+	}
+	taskTask := &task.Task{
+		Broker: brokerBroker,
+	}
 	mysqlConfig, err := mysql.NewConfig(viper)
 	if err != nil {
 		return nil, err
@@ -47,7 +60,10 @@ func NewApp(ctx context.Context) (*ginny.Application, error) {
 		return nil, err
 	}
 	userRepo := repo.NewUserRepo(configConfig, sqlBuilder)
-	serviceService := service.NewService(configConfig, userRepo)
+	serviceService, err := service.NewService(ctx, configConfig, taskTask, userRepo)
+	if err != nil {
+		return nil, err
+	}
 	registrarFunc := service.RegisterService(ctx, serviceService)
 	v := serverOption()
 	application, err := ginny.NewApp(ctx, option, zapLogger, registrarFunc, v...)
