@@ -11,8 +11,8 @@ import (
 	"github.com/goriller/ginny-demo/internal/config"
 	"github.com/goriller/ginny-demo/internal/repo"
 	"github.com/goriller/ginny-demo/internal/task"
+	"github.com/goriller/ginny/errs"
 	"github.com/goriller/ginny/logger"
-	"github.com/goriller/ginny/server/mux"
 	"go.uber.org/zap"
 )
 
@@ -35,7 +35,7 @@ func NewService(
 	task *task.Task,
 	userRepository *repo.UserRepo,
 ) (*Service, error) {
-	mux.RegisterErrorCodes(pb.ErrorCode_name)
+	errs.RegisterErrorCodes(pb.ErrorCode_name)
 
 	return &Service{
 		config:         config,
