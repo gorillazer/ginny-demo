@@ -8,6 +8,7 @@ import (
 	broker "github.com/goriller/ginny-broker"
 	_ "github.com/goriller/ginny-broker/kafka"
 	pb "github.com/goriller/ginny-demo/api/proto"
+	"github.com/goriller/ginny-demo/internal/cache"
 	"github.com/goriller/ginny-demo/internal/config"
 	"github.com/goriller/ginny-demo/internal/repo"
 	"github.com/goriller/ginny-demo/internal/task"
@@ -24,21 +25,25 @@ type Service struct {
 	pb.UnimplementedSayServer
 	config *config.Config
 	// Introduce new dependencies here, exp:
-	task           *task.Task
-	userRepository *repo.UserRepo
+
+	cache          cache.IRedisCache
+	task           task.ITask
+	userRepository repo.IUserRepo
 }
 
 // NewService new service that implement hello
 func NewService(
 	ctx context.Context,
 	config *config.Config,
-	task *task.Task,
-	userRepository *repo.UserRepo,
+	cache cache.IRedisCache,
+	task task.ITask,
+	userRepository repo.IUserRepo,
 ) (*Service, error) {
 	errs.RegisterErrorCodes(pb.ErrorCode_name)
 
 	return &Service{
 		config:         config,
+		cache:          cache,
 		task:           task,
 		userRepository: userRepository,
 	}, nil

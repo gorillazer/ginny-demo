@@ -4,13 +4,13 @@ import (
 	"context"
 
 	"github.com/google/wire"
+	"github.com/goriller/ginny-demo/internal/cache"
 	"github.com/goriller/ginny-demo/internal/config"
 	"github.com/goriller/ginny-demo/internal/repo/entity"
 	mysql "github.com/goriller/ginny-mysql"
 	"github.com/goriller/ginny/logger"
 	"go.uber.org/zap"
 	// mongo "github.com/goriller/ginny-mongo"
-	// redis "github.com/goriller/ginny-redis"
 	// DATABASE_LIB 锚点请勿删除! Do not delete this line!
 )
 
@@ -26,24 +26,24 @@ type IUserRepo interface {
 // UserRepo
 type UserRepo struct {
 	config *config.Config
-	// redis *redis.Manager
-	mysql *mysql.SqlBuilder
-	// mongo *mongo.Manager
+	mysql  *mysql.SqlBuilder
+	// mongo  *mongo.Manager
+	cache cache.IRedisCache
 	// STRUCT_ATTR 锚点请勿删除! Do not delete this line!
 }
 
 // NewUserRepo
 func NewUserRepo(
 	config *config.Config,
-	// redis *redis.Manager,
 	mysql *mysql.SqlBuilder,
 	// mongo *mongo.Manager,
+	cache cache.IRedisCache,
 	// FUNC_PARAM 锚点请勿删除! Do not delete this line!
 ) *UserRepo {
 	return &UserRepo{
 		config: config,
-		// redis: redis,
-		mysql: mysql,
+		cache:  cache,
+		mysql:  mysql,
 		// mongo: mongo,
 		// FUNC_ATTR 锚点请勿删除! Do not delete this line!
 	}
