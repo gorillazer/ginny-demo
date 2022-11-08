@@ -1,5 +1,5 @@
 app:
-  name: github.com/goriller/ginny-demo
+  Name: github.com/goriller/ginny-demo
   Version: 0.0.1
   GrpcAddr: :9000
   HttpAddr: :8080
@@ -11,8 +11,9 @@ consul:
   address: ${consul_addr}
 
 jaeger:
-  serviceName: test
+  serviceName: ginny-demo
   reporter:
+    logSpans: true
     localAgentHostPort: ${jaeger_agent}
   sampler:
     type: const

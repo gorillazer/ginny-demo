@@ -16,7 +16,7 @@ import (
 
 // Hello implements grpc proto Hello Method interface.
 func (s *Service) Hello(ctx context.Context, req *pb.Request) (*pb.Response, error) {
-	log := logger.WithContext(ctx).With(zap.String("action", "Hello"))
+	log := logger.WithContext(ctx)
 	log.Debug("req", zap.Any("req", req))
 
 	topic := config.Get().Broker.Topic

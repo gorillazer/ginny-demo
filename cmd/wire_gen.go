@@ -9,16 +9,19 @@ import (
 	"context"
 	"github.com/goriller/ginny"
 	"github.com/goriller/ginny-broker"
+	"github.com/goriller/ginny-consul"
 	"github.com/goriller/ginny-demo/internal/cache"
 	config2 "github.com/goriller/ginny-demo/internal/config"
 	"github.com/goriller/ginny-demo/internal/repo"
 	"github.com/goriller/ginny-demo/internal/service"
 	"github.com/goriller/ginny-demo/internal/task"
+	"github.com/goriller/ginny-jaeger"
 	"github.com/goriller/ginny-mysql"
 	"github.com/goriller/ginny-redis"
 	"github.com/goriller/ginny/config"
 	"github.com/goriller/ginny/logger"
 	"github.com/goriller/ginny/server"
+	"github.com/opentracing/opentracing-go"
 )
 
 import (
@@ -76,7 +79,23 @@ func NewApp(ctx context.Context) (*ginny.Application, error) {
 		return nil, err
 	}
 	registrarFunc := service.RegisterService(ctx, serviceService)
-	v := serverOption()
+	apiConfig, err := consul.NewOptions(viper)
+	if err != nil {
+		return nil, err
+	}
+	client, err := consul.NewClient(ctx, apiConfig)
+	if err != nil {
+		return nil, err
+	}
+	configuration, err := jaeger.NewConfiguration(viper)
+	if err != nil {
+		return nil, err
+	}
+	tracer, err := jaeger.NewJaegerTracer(ctx, configuration)
+	if err != nil {
+		return nil, err
+	}
+	v := serverOption(client, tracer)
 	application, err := ginny.NewApp(ctx, option, zapLogger, registrarFunc, v...)
 	if err != nil {
 		return nil, err
@@ -86,7 +105,10 @@ func NewApp(ctx context.Context) (*ginny.Application, error) {
 
 // app.go:
 
-func serverOption() (opts []server.Option) {
-
+func serverOption(consul2 *consul.Client,
+	tracer opentracing.Tracer,
+) (opts []server.Option) {
+	opts = append(opts, server.WithDiscover(consul2))
+	opts = append(opts, server.WithTracer(tracer))
 	return
 }

@@ -15,12 +15,17 @@ var (
 
 // Config
 type Config struct {
+	Client map[string]string // 注意: map key为小写
 	Broker Broker
 }
 
 // Broker
 type Broker struct {
 	Topic string
+}
+
+type ClientInfo struct {
+	Endpoint string
 }
 
 // NewConfig
