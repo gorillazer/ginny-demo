@@ -25,10 +25,10 @@ type RedisCache struct {
 // NewRedisCache
 func NewRedisCache(
 	redis *gredis.Redis,
-) *RedisCache {
+) (*RedisCache, error) {
 	return &RedisCache{
 		redis: redis.Client(),
-	}
+	}, nil
 }
 
 // Ping

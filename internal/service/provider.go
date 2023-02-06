@@ -39,8 +39,6 @@ func NewService(
 	task task.ITask,
 	userRepository repo.IUserRepo,
 ) (*Service, error) {
-	errs.RegisterErrorCodes(pb.ErrorCode_name)
-
 	return &Service{
 		config:         config,
 		cache:          cache,
@@ -52,6 +50,7 @@ func NewService(
 // RegisterService
 func RegisterService(ctx context.Context, sev *Service) ginny.RegistrarFunc {
 	return func(app *ginny.Application) error {
+		errs.RegisterErrorCodes(pb.ErrorCode_name)
 		// 注册gRPC服务
 		app.Server.RegisterService(ctx, &pb.Say_ServiceDesc, sev)
 		if app.Option.HttpAddr != "" {

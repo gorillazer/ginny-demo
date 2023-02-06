@@ -14,16 +14,17 @@ import (
 
 // NewExampleClient
 func NewExampleClient(ctx context.Context, config *config.Config, consul *consul.Client) (pb.SayClient, error) {
-	endpoint := config.Client["example"]
-	if endpoint == "" {
+	c := config.Client["example"]
+	if c == nil || c.Endpoint == "" {
 		return nil, fmt.Errorf("grpc endpoint is undefined")
 	}
-	cli, err := client.NewGrpcClient(ctx, endpoint, pb.NewSayClient,
-		client.WithGrpcResolver(func(ctx context.Context, service, tag string) (addr string, err error) {
+
+	cli, err := client.NewClient(ctx, c.Endpoint, pb.NewSayClient,
+		client.WithResolver(func(ctx context.Context, service, tag string) (addr string, err error) {
 			return consul.Resolver(ctx, service, tag)
 		}))
 	if err != nil {
-		logger.Action("NewGrpcCli").Error(fmt.Sprintf("%s: %s", endpoint, err.Error()))
+		logger.Action("NewGrpcCli").Error(fmt.Sprintf("%s: %s", c.Endpoint, err.Error()))
 		return nil, err
 	}
 	if data, ok := cli.(pb.SayClient); ok {

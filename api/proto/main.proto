@@ -11,22 +11,56 @@ import "google/api/annotations.proto";
 service Say {
 
   // 测试HelloWorld
-  rpc Hello(Request) returns (Response) {
+  rpc Hello(HelloReq) returns (HelloRes) {
     option (google.api.http) = {
       post : "/hello"
+      body : "*"
+    };
+  }
+
+  rpc Topic(TopicReq) returns (TopicRes) {
+    option (google.api.http) = {
+      post : "/topic"
+      body : "*"
+    };
+  }
+  rpc RpcCli(RpcCliReq) returns (RpcCliRes) {
+    option (google.api.http) = {
+      post : "/cli"
       body : "*"
     };
   }
 }
 
 // Hello 请求
-message Request {
+message HelloReq {
+  // 姓名
+  string name = 1 [ (validate.rules).string = {max_bytes : 32} ];
+}
+
+//
+message TopicReq {
+  // 姓名
+  string name = 1 [ (validate.rules).string = {max_bytes : 32} ];
+}
+//
+message RpcCliReq {
   // 姓名
   string name = 1 [ (validate.rules).string = {max_bytes : 32} ];
 }
 
 // Hello 响应
-message Response {
+message HelloRes {
+  // 回复消息
+  string msg = 1;
+}
+//
+message TopicRes {
+  // 回复消息
+  string msg = 1;
+}
+//
+message RpcCliRes {
   // 回复消息
   string msg = 1;
 }

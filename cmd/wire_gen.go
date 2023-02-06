@@ -15,8 +15,8 @@ import (
 	"github.com/goriller/ginny-demo/internal/repo"
 	"github.com/goriller/ginny-demo/internal/service"
 	"github.com/goriller/ginny-demo/internal/task"
+	"github.com/goriller/ginny-gorm"
 	"github.com/goriller/ginny-jaeger"
-	"github.com/goriller/ginny-mysql"
 	"github.com/goriller/ginny-redis"
 	"github.com/goriller/ginny/config"
 	"github.com/goriller/ginny/logger"
@@ -53,7 +53,10 @@ func NewApp(ctx context.Context) (*ginny.Application, error) {
 	if err != nil {
 		return nil, err
 	}
-	redisCache := cache.NewRedisCache(redisRedis)
+	redisCache, err := cache.NewRedisCache(redisRedis)
+	if err != nil {
+		return nil, err
+	}
 	brokerConfig, err := broker.NewConfiguration(viper)
 	if err != nil {
 		return nil, err
@@ -65,15 +68,18 @@ func NewApp(ctx context.Context) (*ginny.Application, error) {
 	taskTask := &task.Task{
 		Broker: brokerBroker,
 	}
-	mysqlConfig, err := mysql.NewConfig(viper)
+	ormConfig, err := orm.NewConfig(viper, zapLogger)
 	if err != nil {
 		return nil, err
 	}
-	sqlBuilder, err := mysql.NewSqlBuilder(ctx, mysqlConfig, zapLogger)
+	ormORM, err := orm.New(ctx, ormConfig, zapLogger)
 	if err != nil {
 		return nil, err
 	}
-	userRepo := repo.NewUserRepo(configConfig, sqlBuilder, redisCache)
+	userRepo, err := repo.NewUserRepo(ormORM)
+	if err != nil {
+		return nil, err
+	}
 	serviceService, err := service.NewService(ctx, configConfig, redisCache, taskTask, userRepo)
 	if err != nil {
 		return nil, err

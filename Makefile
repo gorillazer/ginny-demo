@@ -1,7 +1,7 @@
 # 发布时根据情况修改
 APP = APP_NAME
 CONF = dev.yml
-PROTO_IMG = richenlin/protoc:latest
+PROTO_IMG = ginny/protoc:latest
 #-------------------------------------	
 .PHONY: run
 run: tidy proto wire
@@ -41,12 +41,8 @@ lint:
 # go install github.com/golang/protobuf/protoc-gen-go@latest
 .PHONY: protoc
 protoc:
-	docker run --rm -v $(shell pwd):/build/go -v $(shell pwd):/build/proto ${PROTO_IMG}
-# protoc \
-# -I api/proto \
-# --go_out="plugins=grpc:api/proto" \
-# --validate_out="lang=go:api/proto" \
-# ./api/proto/*.proto
+	docker run --rm -v $(shell pwd):/build/go -v $(shell pwd):/build/proto -v $(shell pwd)/doc:/build/openapi ${PROTO_IMG}
+# protoc -I api/proto --go_out="plugins=grpc:api/proto" --validate_out="lang=go:api/proto" ./api/proto/*.proto
 #-------------------------------------	
 .PHONY: docker
 docker-compose: build dash rules
