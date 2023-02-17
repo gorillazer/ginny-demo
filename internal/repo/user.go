@@ -128,7 +128,7 @@ func (p *UserRepo) Update(ctx context.Context, where entity.UserEntity,
 	if err := validation.Validate(update); err != nil {
 		return 0, err
 	}
-	result := p.orm.RDB().Table(p.entity.TableName()).Where(where).Updates(update)
+	result := p.orm.WDB().Table(p.entity.TableName()).Where(where).Updates(update)
 	return result.RowsAffected, result.Error
 }
 
@@ -139,7 +139,7 @@ func (p *UserRepo) Update(ctx context.Context, where entity.UserEntity,
 func (p *UserRepo) Delete(ctx context.Context,
 	where entity.UserEntity) (int64, error) {
 	var t *entity.UserEntity
-	result := p.orm.RDB().Table(p.entity.TableName()).Where(where).Delete(t)
+	result := p.orm.WDB().Table(p.entity.TableName()).Where(where).Delete(t)
 	return result.RowsAffected, result.Error
 }
 
@@ -150,6 +150,6 @@ func (p *UserRepo) Delete(ctx context.Context,
 func (p *UserRepo) PDelete(ctx context.Context,
 	where entity.UserEntity) (int64, error) {
 	var t *entity.UserEntity
-	result := p.orm.RDB().Table(p.entity.TableName()).Unscoped().Where(where).Delete(t)
+	result := p.orm.WDB().Table(p.entity.TableName()).Unscoped().Where(where).Delete(t)
 	return result.RowsAffected, result.Error
 }
