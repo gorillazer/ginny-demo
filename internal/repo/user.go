@@ -7,7 +7,6 @@ import (
 
 	"github.com/google/wire"
 	"github.com/goriller/ginny-demo/internal/repo/entity"
-	orm "github.com/goriller/ginny-gorm"
 	"github.com/goriller/ginny-util/validation"
 	"gorm.io/gorm"
 	// DATABASE_LIB 锚点请勿删除! Do not delete this line!
@@ -36,7 +35,7 @@ type IUserRepo interface {
 
 // UserRepo
 type UserRepo struct {
-	orm *orm.ORM
+	orm *gorm.DB
 	// mongo *mongo.Manager
 	entity *entity.UserEntity
 	// STRUCT_ATTR 锚点请勿删除! Do not delete this line!
@@ -45,7 +44,7 @@ type UserRepo struct {
 // NewUserRepo
 func NewUserRepo(
 	// redis *redis.Manager,
-	orm *orm.ORM,
+	orm *gorm.DB,
 	// mongo *mongo.Manager,
 	// FUNC_PARAM 锚点请勿删除! Do not delete this line!
 ) (*UserRepo, error) {
@@ -58,7 +57,7 @@ func NewUserRepo(
 
 // Count
 func (p *UserRepo) Count(ctx context.Context, where entity.UserEntity) (total int64, err error) {
-	err = p.orm.RDB().Table(p.entity.TableName()).Where(where).Count(&total).Error
+	err = p.orm.Table(p.entity.TableName()).Where(where).Count(&total).Error
 	return
 }
 
@@ -72,7 +71,7 @@ func (p *UserRepo) Find(ctx context.Context, where entity.UserEntity, order []st
 	if order == nil {
 		order = []string{"id desc"}
 	}
-	err = p.orm.RDB().Table(p.entity.TableName()).Where(where).Order(strings.Join(order, ",")).First(result).Error
+	err = p.orm.Table(p.entity.TableName()).Where(where).Order(strings.Join(order, ",")).First(result).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil, nil
 	}
@@ -89,7 +88,7 @@ func (p *UserRepo) FindAll(ctx context.Context, where entity.UserEntity,
 	if order == nil {
 		order = []string{"id desc"}
 	}
-	db := p.orm.RDB().Table(p.entity.TableName()).Where(where).Order(strings.Join(order, ","))
+	db := p.orm.Table(p.entity.TableName()).Where(where).Order(strings.Join(order, ","))
 	var (
 		limit  = 1000
 		offset = 0
@@ -115,7 +114,7 @@ func (p *UserRepo) Insert(ctx context.Context,
 	if err := validation.Validate(entity); err != nil {
 		return 0, err
 	}
-	result := p.orm.RDB().Table(p.entity.TableName()).Create(entity)
+	result := p.orm.Table(p.entity.TableName()).Create(entity)
 	return entity.Id, result.Error
 }
 
@@ -128,7 +127,7 @@ func (p *UserRepo) Update(ctx context.Context, where entity.UserEntity,
 	if err := validation.Validate(update); err != nil {
 		return 0, err
 	}
-	result := p.orm.WDB().Table(p.entity.TableName()).Where(where).Updates(update)
+	result := p.orm.Table(p.entity.TableName()).Where(where).Updates(update)
 	return result.RowsAffected, result.Error
 }
 
@@ -139,7 +138,7 @@ func (p *UserRepo) Update(ctx context.Context, where entity.UserEntity,
 func (p *UserRepo) Delete(ctx context.Context,
 	where entity.UserEntity) (int64, error) {
 	var t *entity.UserEntity
-	result := p.orm.WDB().Table(p.entity.TableName()).Where(where).Delete(t)
+	result := p.orm.Table(p.entity.TableName()).Where(where).Delete(t)
 	return result.RowsAffected, result.Error
 }
 
@@ -150,6 +149,6 @@ func (p *UserRepo) Delete(ctx context.Context,
 func (p *UserRepo) PDelete(ctx context.Context,
 	where entity.UserEntity) (int64, error) {
 	var t *entity.UserEntity
-	result := p.orm.WDB().Table(p.entity.TableName()).Unscoped().Where(where).Delete(t)
+	result := p.orm.Table(p.entity.TableName()).Unscoped().Where(where).Delete(t)
 	return result.RowsAffected, result.Error
 }

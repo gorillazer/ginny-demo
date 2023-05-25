@@ -34,10 +34,11 @@ func NewApp(ctx context.Context) (*ginny.Application, error) {
 }
 
 func serverOption(
+	config *config.Config,
 	consul *consul.Client,
 	tracer opentracing.Tracer,
 ) (opts []server.Option) {
-	opts = append(opts, server.WithDiscover(consul))
+	opts = append(opts, server.WithDiscover(consul, config.ServiceTags...))
 	opts = append(opts, server.WithTracer(tracer))
 	return
 }

@@ -15,8 +15,9 @@ var (
 
 // Config
 type Config struct {
-	Client map[string]*ClientInfo // 注意: map key为小写
-	Broker Broker
+	Client      map[string]*ClientInfo // 注意: map key为小写
+	Broker      Broker
+	ServiceTags []string
 }
 
 // Broker
