@@ -44,13 +44,43 @@ func (s *Service) Hello(ctx context.Context, req *pb.HelloReq) (*pb.HelloRes, er
 	// Demo: 自定义日志字段
 	log.With(zap.String("custom2", "test2")).Info("xxx")
 
+	_, err := s.userRepository.Insert(ctx, &entity.UserEntity{
+		Name: "test1",
+	})
+	if err != nil {
+		return nil, errs.New(codes.Internal, err.Error())
+	}
+
 	user, err := s.userRepository.Find(ctx, entity.UserEntity{
 		Id: 1,
 	}, nil)
 	if err != nil {
-		return nil, errs.New(codes.InvalidArgument, "the error example for 4xx")
+		return nil, errs.New(codes.Internal, err.Error())
 	}
 	log.Info("user", zap.Any("user", user))
+	users, err := s.userRepository.FindAll(ctx, entity.UserEntity{
+		Id: 1,
+	}, nil)
+	if err != nil {
+		return nil, errs.New(codes.Internal, err.Error())
+	}
+	log.Info("user", zap.Any("users", users))
+
+	_, err = s.userRepository.Update(ctx, entity.UserEntity{
+		Id: 1,
+	}, entity.UserEntity{
+		Name: "0",
+	})
+	if err != nil {
+		return nil, errs.New(codes.Internal, err.Error())
+	}
+
+	_, err = s.userRepository.Delete(ctx, entity.UserEntity{
+		Id: 1,
+	})
+	if err != nil {
+		return nil, errs.New(codes.Internal, err.Error())
+	}
 
 	// 返回结果
 	return &pb.HelloRes{

@@ -71,7 +71,7 @@ func (p *UserRepo) Find(ctx context.Context, where entity.UserEntity, order []st
 	if order == nil {
 		order = []string{"id desc"}
 	}
-	err = p.orm.Table(p.entity.TableName()).Where(where).Order(strings.Join(order, ",")).First(result).Error
+	err = p.orm.Table(p.entity.TableName()).Where(where).Order(strings.Join(order, ",")).First(&result).Error
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		return nil, nil
 	}
@@ -120,7 +120,7 @@ func (p *UserRepo) Insert(ctx context.Context,
 
 // Update
 /** 注意:
- * where条件仅可以使用非零值
+ * where、update仅可以使用非零值
  */
 func (p *UserRepo) Update(ctx context.Context, where entity.UserEntity,
 	update entity.UserEntity) (int64, error) {
@@ -138,7 +138,7 @@ func (p *UserRepo) Update(ctx context.Context, where entity.UserEntity,
 func (p *UserRepo) Delete(ctx context.Context,
 	where entity.UserEntity) (int64, error) {
 	var t *entity.UserEntity
-	result := p.orm.Table(p.entity.TableName()).Where(where).Delete(t)
+	result := p.orm.Table(p.entity.TableName()).Where(where).Delete(&t)
 	return result.RowsAffected, result.Error
 }
 
@@ -149,6 +149,6 @@ func (p *UserRepo) Delete(ctx context.Context,
 func (p *UserRepo) PDelete(ctx context.Context,
 	where entity.UserEntity) (int64, error) {
 	var t *entity.UserEntity
-	result := p.orm.Table(p.entity.TableName()).Unscoped().Where(where).Delete(t)
+	result := p.orm.Table(p.entity.TableName()).Unscoped().Where(where).Delete(&t)
 	return result.RowsAffected, result.Error
 }

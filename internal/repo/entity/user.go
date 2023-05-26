@@ -1,18 +1,23 @@
 package entity
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 // UserEntity
 type UserEntity struct {
-	Id      int64  `json:"id" bson:"_id"`
-	Name    string `json:"name" bson:"name"`
-	Status  int    `json:"status" bson:"status"`
-	Deleted gorm.DeletedAt
+	Id        int64  `json:"id" bson:"_id"`
+	Name      string `json:"name" bson:"name"`
+	Deleted   gorm.DeletedAt
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
 // TableName
 func (p *UserEntity) TableName() string {
-	return "user"
+	return "lc_user"
 }
 
 // Validate

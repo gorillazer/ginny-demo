@@ -36,13 +36,13 @@ func NewService(
 	ctx context.Context,
 	config *config.Config,
 	cache cache.IRedisCache,
-	task task.ITask,
+	// task task.ITask,
 	userRepository repo.IUserRepo,
 ) (*Service, error) {
 	return &Service{
-		config:         config,
-		cache:          cache,
-		task:           task,
+		config: config,
+		cache:  cache,
+		// task:           task,
 		userRepository: userRepository,
 	}, nil
 }
@@ -60,10 +60,10 @@ func RegisterService(ctx context.Context, sev *Service) ginny.RegistrarFunc {
 			}
 		}
 		// 注册消息队列监听
-		err := RegisterTask(ctx, sev)
-		if err != nil {
-			return err
-		}
+		// err := RegisterTask(ctx, sev)
+		// if err != nil {
+		// 	return err
+		// }
 
 		return nil
 	}

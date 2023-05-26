@@ -9,13 +9,11 @@ package main
 import (
 	"context"
 	"github.com/goriller/ginny"
-	"github.com/goriller/ginny-broker"
 	"github.com/goriller/ginny-consul"
 	"github.com/goriller/ginny-demo/internal/cache"
 	config2 "github.com/goriller/ginny-demo/internal/config"
 	"github.com/goriller/ginny-demo/internal/repo"
 	"github.com/goriller/ginny-demo/internal/service"
-	"github.com/goriller/ginny-demo/internal/task"
 	"github.com/goriller/ginny-gorm"
 	"github.com/goriller/ginny-jaeger"
 	"github.com/goriller/ginny-redis"
@@ -58,17 +56,6 @@ func NewApp(ctx context.Context) (*ginny.Application, error) {
 	if err != nil {
 		return nil, err
 	}
-	brokerConfig, err := broker.NewConfiguration(viper)
-	if err != nil {
-		return nil, err
-	}
-	brokerBroker, err := broker.NewBroker(ctx, zapLogger, brokerConfig)
-	if err != nil {
-		return nil, err
-	}
-	taskTask := &task.Task{
-		Broker: brokerBroker,
-	}
 	ormConfig, err := orm.NewConfig(viper, zapLogger)
 	if err != nil {
 		return nil, err
@@ -81,7 +68,7 @@ func NewApp(ctx context.Context) (*ginny.Application, error) {
 	if err != nil {
 		return nil, err
 	}
-	serviceService, err := service.NewService(ctx, configConfig, redisCache, taskTask, userRepo)
+	serviceService, err := service.NewService(ctx, configConfig, redisCache, userRepo)
 	if err != nil {
 		return nil, err
 	}
