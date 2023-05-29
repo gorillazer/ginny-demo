@@ -9,10 +9,11 @@ require (
 	github.com/goriller/ginny v0.3.0
 	github.com/goriller/ginny-broker v0.0.1
 	github.com/goriller/ginny-consul v0.1.0
-	github.com/goriller/ginny-gorm v0.0.0-20230525102642-a3bd7bcba0d4
+	github.com/goriller/ginny-gorm v0.0.1
 	github.com/goriller/ginny-jaeger v0.0.7
 	github.com/goriller/ginny-redis v0.0.3
 	github.com/goriller/ginny-util/validation v0.0.0-20230114041301-95e122fbc104
+	github.com/goriller/gorm-plus v0.0.1
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.15.2
 	github.com/opentracing/opentracing-go v1.2.0
 	github.com/spf13/viper v1.15.0
@@ -65,7 +66,6 @@ require (
 	github.com/googleapis/gax-go/v2 v2.7.0 // indirect
 	github.com/goriller/ginny-util/graceful v0.0.0-20230329082818-d0cdc3cae4d9 // indirect
 	github.com/goriller/ginny-util/ip v0.0.0-20230114041301-95e122fbc104 // indirect
-	github.com/goriller/gorm-plus v0.0.1 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware/providers/zap/v2 v2.0.0-rc.3 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0-rc.3 // indirect
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.1-0.20200507082539-9abf3eb82b4a // indirect

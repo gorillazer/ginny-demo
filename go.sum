@@ -656,8 +656,8 @@ github.com/goriller/ginny-broker v0.0.1 h1:M5oiKHIbL3UC4pEesr9wRoMcyykAp5iZQwsry
 github.com/goriller/ginny-broker v0.0.1/go.mod h1:ElEXL6gOHepIYA+9QEHLjZum5RNDq+Ko/xlKbpKWKSk=
 github.com/goriller/ginny-consul v0.1.0 h1:BT6YK8XcX614fNuGNkRphKTJnlJQj3S7jP2hliY0cMw=
 github.com/goriller/ginny-consul v0.1.0/go.mod h1:bmlDwFUe/RM+xcr2NpIUlQ5hTOLFQeJhANF8Ka4wRKU=
-github.com/goriller/ginny-gorm v0.0.0-20230525102642-a3bd7bcba0d4 h1:hRoyc0mUQFphxu5c7aJJb6DyVJYkExIPjCWECxwFuGI=
-github.com/goriller/ginny-gorm v0.0.0-20230525102642-a3bd7bcba0d4/go.mod h1:OVuShxsS+/BKyEywGM+afpu8BYOGnyYYCzn4FuwMqAs=
+github.com/goriller/ginny-gorm v0.0.1 h1:buQpSgss8KI2P4XkKPWOaw72SNxlnQdEkgCY4tYYqzA=
+github.com/goriller/ginny-gorm v0.0.1/go.mod h1:OVuShxsS+/BKyEywGM+afpu8BYOGnyYYCzn4FuwMqAs=
 github.com/goriller/ginny-jaeger v0.0.7 h1:nwgxITI5EJ2VL5Iwk5pm+Q1kOm2mt8Ce2xCNw9zV18c=
 github.com/goriller/ginny-jaeger v0.0.7/go.mod h1:Ba730CMZWuaptyPr8XWhbtykL3Qgxk+vRGfw2IMsjSQ=
 github.com/goriller/ginny-redis v0.0.3 h1:mrP8FNqwKPPSyDsLS5uoeJnP/iJKgiv3CDVNA8edMtU=
