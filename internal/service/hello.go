@@ -9,6 +9,7 @@ import (
 	"github.com/goriller/ginny-demo/internal/repo/entity"
 	"github.com/goriller/ginny/errs"
 	"github.com/goriller/ginny/logger"
+	"github.com/goriller/gorm-plus/gplus"
 	"go.uber.org/zap"
 	"google.golang.org/grpc/codes"
 )
@@ -58,13 +59,14 @@ func (s *Service) Hello(ctx context.Context, req *pb.HelloReq) (*pb.HelloRes, er
 		return nil, errs.New(codes.Internal, err.Error())
 	}
 	log.Info("user", zap.Any("user", user))
-	users, err := s.userRepository.FindAll(ctx, entity.UserEntity{
-		Id: 1,
-	}, nil)
+
+	query, model := gplus.NewQuery[entity.UserEntity]()
+	query.Eq(&model.Name, "")
+	ret, err := s.userRepository.SelectPage(ctx, query, 0, 2)
 	if err != nil {
 		return nil, errs.New(codes.Internal, err.Error())
 	}
-	log.Info("user", zap.Any("users", users))
+	log.Info("user", zap.Any("ret", ret))
 
 	_, err = s.userRepository.Update(ctx, entity.UserEntity{
 		Id: 1,
